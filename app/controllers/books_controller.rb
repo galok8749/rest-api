@@ -5,6 +5,17 @@ class BooksController < ApplicationController
 
   def create
     # some logic to create book
+    book = Book.new(book_params)
+    if book.save
+      render json: book, status: :created
+    else
+      rensdr json: book.errors, status: :unproccessable_entity
+    end
   end
 
+  private
+
+  def book_params
+    params.require(:book).permit(:title, :auther)
+  end
 end
